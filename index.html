@@ -62,40 +62,56 @@
                color:var(--blue-700); max-width:760px; text-align:center; font-size:clamp(1rem,3vw,1.15rem); }
   .start-image{ max-width: 300px; width: 100%; margin: 0 auto; }
 
-  .mute-btn{ position:absolute; top:.8rem; right:.8rem; background:var(--orange); color:#fff; border:2px solid #fff; width:38px; height:38px; border-radius:50%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; z-index:20; }
+  .mute-btn{ position:absolute; top:.8rem; right:4.5rem; background:var(--orange); color:#fff; border:2px solid #fff; width:38px; height:38px; border-radius:50%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; z-index:20; }
   .mute-btn:hover{ background:var(--orange-700); }
-  .help-btn{ position:absolute; top:.8rem; right:4.5rem; width:38px; height:38px; border-radius:50%; border:none; background:#9c27b0; color:#fff; font-weight:800; cursor:pointer; z-index:20; }
+  .help-btn{ position:absolute; top:.8rem; right:.8rem; width:38px; height:38px; border-radius:50%; border:none; background:#9c27b0; color:#fff; font-weight:800; cursor:pointer; z-index:20; }
 
   .board{ display:grid; grid-template-columns:1fr; gap:.8rem; align-items:start; }
-  .panel{ background:#f8fbff; border:2px solid #d3e2ff; border-radius:12px; padding:.7rem .9rem; display:flex; align-items:center; justify-content:center; gap:.8rem; }
+  .panel{ background:#f8fbff; border:2px solid #d3e2ff; border-radius:12px; padding:.7rem .9rem; display:flex; align-items:center; justify-content:space-between; gap:.8rem; }
   .word-display-container{ display:flex; align-items:center; justify-content:center; gap:0.5rem; flex:1; }
-  .word-display{ font-size:clamp(1.2rem,4.5vw,1.8rem); font-weight:900; color:var(--blue-700); text-align:center; display:none; }
+  .word-display{ font-size:clamp(1.2rem,4.5vw,1.8rem); font-weight:900; color:var(--blue-700); text-align:center; }
   .btn-play-word{ background:var(--blue-600); color:#fff; border:none; border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background-color .2s; }
   .btn-play-word:hover{ background:var(--blue-700); }
   .btn-play-word svg{ width:20px; height:20px; }
 
+  .arrow-wrap{ display:flex; gap:.5rem; align-items:center; }
+  .arrow{ width:44px; height:44px; background:transparent; border:none; position:relative; cursor:pointer; }
+  .arrow:active{ transform:scale(.96); }
+  .arrow.left::before, .arrow.right::before{ content:""; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:0; height:0; border-top:12px solid transparent; border-bottom:12px solid transparent; }
+  .arrow.left::before{ border-right:18px solid var(--blue-600); margin-left:-3px; }
+  .arrow.right::before{ border-left:18px solid var(--blue-600); margin-left:3px; }
+
+  .startGameArea{ display:flex; gap:.6rem; align-items:center; justify-content:center; margin-top:.4rem; }
+  .btn-start-inline{ display:inline-flex; }
+
   .stage{ background:#fff; border-radius:12px; border:2px solid #e6f2ff; padding:.6rem; box-shadow: inset 0 0 0 1px #f3f7ff; }
-  .img-wrap{ position:relative; width:100%; max-width:980px; margin:0 auto; }
+  .img-wrap{ position:relative; width:100%; max-width:900px; margin:0 auto; }
   .img-wrap img{ display:block; width:100%; height:auto; border-radius:10px; user-select:none; -webkit-user-drag:none; }
 
-  .selection-box{
-    position:absolute;
-    border:3px solid transparent;
-    cursor:pointer;
-    transition: all .15s ease;
+  /* Estilos del marcador personalizado */
+  .marker{
+      position:absolute;
+      background:rgba(255, 255, 255, 0); /* Transparente por defecto */
+      border:3px solid transparent; /* Borde transparente por defecto */
+      border-radius:0; /* Cuadrado */
+      box-shadow:none; /* Sin sombra */
+      transform:translate(-50%,-50%);
+      display:flex; align-items:center; justify-content:center; pointer-events:auto;
+      cursor: pointer;
   }
-  .selection-box.correct{ 
-    background:rgba(46, 204, 113, 0.3); 
-    border-color:#2ecc71;
+  .marker.correct{ 
+      border-color:#20b86a; 
+      background: transparent; 
+      outline: 3px solid #20b86a; 
+      outline-offset: 3px; 
   }
-  .selection-box.incorrect{ 
-    background:rgba(231, 76, 60, 0.3); 
-    border-color:#e74c3c;
+  .marker.reveal-red{ 
+      border-color:#e74c3c; 
+      background: transparent; 
+      outline: 3px solid #e74c3c; 
+      outline-offset: 3px; 
   }
-  .selection-box:hover{
-    background:rgba(37, 79, 186, 0.1);
-  }
-
   .overlay-click{ position:absolute; inset:0; }
 
   .results{ display:flex; flex-direction:column; align-items:center; gap:.6rem; text-align:center; min-height:calc(100vh - 180px); }
@@ -107,6 +123,7 @@
   @keyframes bounce { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-8px);} }
   .credit{ color:var(--blue-700); margin-top:1rem; }
 
+  /* Tamaño del mensaje final */
   #finalMsg {
     font-size: clamp(1.6rem, 3.8vw, 2.4rem);
     font-weight: 800;
@@ -114,6 +131,7 @@
     margin-top: 0.6rem;
   }
 
+  /* Estilos para el logo del colegio en la pantalla final */
   .school-logo {
     display: block;
     width: 160px;
@@ -124,6 +142,7 @@
     object-fit: contain;
   }
 
+  /* Ajustes responsivos para móviles */
   @media (max-width: 899px) {
     .school-logo { width: 140px; max-width: 160px; }
   }
@@ -173,21 +192,30 @@
     text-align: center;
   }
 
-  @media (min-width:900px){ 
-    .board{ grid-template-columns: 1fr; align-items:start; } 
-    .panel{ order:1; } 
-    .stage{ order:2; } 
-  }
+  @media (min-width:900px){ .board{ grid-template-columns: 360px 1fr; align-items:start; } .panel{ order:1; } .stage{ order:2; } }
   @media (max-width:899px){
     header{ margin-top:1.6rem; }
     .board{ grid-template-columns:1fr; }
-    .panel{ display:flex; flex-direction:row; align-items:center; justify-content:center; padding:.6rem; }
+    .panel{ display:flex; flex-direction:row; align-items:center; justify-content:space-between; padding:.6rem; }
+    .word-display-container{ order:0; width:100%; margin-bottom:.6rem; }
     .stage{ order:1; }
+    .arrow{ width:40px; height:40px; }
   }
-  @media (max-width:420px){ 
-    .btn{ min-width:110px; padding:.6rem .9rem; height:44px; } 
+  @media (max-width:420px){ .btn{ min-width:110px; padding:.6rem .9rem; height:44px; } }
+
+  .word-display-container.audio-only {
+    justify-content: center;
+  }
+  .word-display-container.audio-only .word-display {
+    display: none;
+  }
+  .arrow-wrap.hidden {
+    display: none;
   }
 
+  .marker.clicked-temp { transform: translate(-50%, -50%) scale(.95); transition: transform .12s ease; }
+
+  /* Nuevo estilo para el consejo, centrado y en dos líneas */
   .advice-box .advice-text {
       display: block;
   }
@@ -204,7 +232,7 @@
 
   <section class="screen active" id="startScreen" aria-labelledby="title">
     <header>
-      <h1 id="title">¿Qué podemos percibir por los sentidos?</h1>
+      <h1 id="title">¿Qué podemos percibir por los sentidos</h1>
       <div class="subtitle">Identifica los diferentes estímulos que podemos reconocer gracias a los sentidos.</div>
     </header>
     <div class="start-content">
@@ -213,7 +241,7 @@
         <strong>¡Buena suerte!</strong>
       </div>
       <button class="btn btn-primary" id="playBtn">Comenzar</button>
-      <img class="start-image" src="https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/main/Ni%C3%B1os.png" alt="Niños aprendiendo">
+      <img class="start-image" src="https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/refs/heads/main/Ni%C3%B1os.png" alt="Niños aprendiendo">
     </div>
   </section>
 
@@ -221,7 +249,6 @@
     <button class="help-btn" id="helpBtn" title="Ayuda">?</button>
     <header>
       <h1 id="gameTitle">Los sentidos</h1>
-      <div class="subtitle" id="gameSubtitle">Identifica los estímulos</div>
     </header>
     <div class="game-info">
       <div class="timer" id="timer">00:00</div>
@@ -231,7 +258,10 @@
 
     <div class="board">
       <div class="panel" aria-live="polite">
-        <div class="word-display-container" id="wordDisplayContainer">
+        <div class="arrow-wrap hidden" id="prevPairWrap">
+          <button class="arrow left" id="prevPair" title="Anterior" aria-label="Anterior"></button>
+        </div>
+        <div class="word-display-container audio-only" id="wordDisplayContainer">
           <div class="word-display" id="wordDisplay">—</div>
           <button class="btn-play-word" id="playWordBtn" title="Reproducir audio" aria-label="Reproducir audio">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -239,13 +269,17 @@
             </svg>
           </button>
         </div>
+        <div class="arrow-wrap hidden" id="nextPairWrap">
+          <button class="arrow right" id="nextPair" title="Siguiente" aria-label="Siguiente"></button>
+        </div>
       </div>
 
       <div class="stage">
         <div class="img-wrap" id="imgWrap">
-          <img id="bodyImg" src="" alt="Imagen del sentido">
+          <img id="bodyImg" src="" alt="Imagen para identificar estímulos">
           <div class="overlay-click" id="overlayClick" aria-hidden="true"></div>
         </div>
+        <div class="startGameArea"></div>
       </div>
     </div>
   </section>
@@ -264,7 +298,7 @@
       <div id="finalMsg" class="subtitle"></div>
       <button class="btn btn-primary" id="backToMenuBtn" style="background:var(--orange);">Volver al menú</button>
       <span class="credit">Creado por Manuel J. Ventura</span>
-      <img class="school-logo" src="https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/main/Siurot.png" alt="Logo del colegio" />
+      <img class="school-logo" src="https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/refs/heads/main/Siurot.png" alt="Logo del colegio" />
     </div>
   </section>
 </div>
@@ -288,78 +322,84 @@
 
 <script>
 /************** Data **************/
-const SCREENS_DATA = [
+const GAME_SCREENS = [
   {
+    id: 'vista',
     title: 'La vista',
     subtitle: '¿Qué podemos distinguir con la vista?',
     image: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/refs/heads/main/2Sentidos/Senti2/Vista.png',
-    width: 664,
-    height: 674,
-    boxes: [
-      {word:'Colores', x1:51, y1:147, x2:302, y2:367, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Colores.mp3'},
-      {word:'Tamaño', x1:190, y1:426, x2:464, y2:634, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Tama%C3%B1o.mp3'},
-      {word:'Formas', x1:387, y1:166, x2:624, y2:369, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Formas.mp3'}
+    originalWidth: 664,
+    originalHeight: 674,
+    areas: [
+      { name: 'Colores', coords: {x1: 51, y1: 147, x2: 302, y2: 367}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Colores.mp3' },
+      { name: 'Tamaño', coords: {x1: 190, y1: 426, x2: 464, y2: 634}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Tama%C3%B1o.mp3' },
+      { name: 'Formas', coords: {x1: 387, y1: 166, x2: 624, y2: 369}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Formas.mp3' }
     ]
   },
   {
+    id: 'olfato',
     title: 'El olfato',
     subtitle: '¿Qué olores podemos distinguir?',
     image: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/refs/heads/main/2Sentidos/Senti2/olores.png',
-    width: 826,
-    height: 596,
-    boxes: [
-      {word:'Desagradable', x1:51, y1:273, x2:372, y2:532, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Desagradable.mp3'},
-      {word:'Agradable', x1:524, y1:298, x2:711, y2:511, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Agradable.mp3'}
+    originalWidth: 826,
+    originalHeight: 596,
+    areas: [
+      { name: 'Desagradable', coords: {x1: 51, y1: 273, x2: 372, y2: 532}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Desagradable.mp3' },
+      { name: 'Agradable', coords: {x1: 524, y1: 298, x2: 711, y2: 511}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Agradable.mp3' }
     ]
   },
   {
+    id: 'oido_fuerte',
     title: 'El oído',
     subtitle: '¿Cómo pueden ser los sonidos?',
     image: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/refs/heads/main/2Sentidos/Senti2/Fuerte_debil.png',
-    width: 775,
-    height: 641,
-    boxes: [
-      {word:'Fuerte', x1:47, y1:278, x2:286, y2:541, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Fuerte.mp3'},
-      {word:'Suave', x1:448, y1:305, x2:738, y2:510, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Suaves.mp3'}
+    originalWidth: 775,
+    originalHeight: 641,
+    areas: [
+      { name: 'Fuerte', coords: {x1: 47, y1: 278, x2: 286, y2: 541}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Fuerte.mp3' },
+      { name: 'Suave', coords: {x1: 448, y1: 305, x2: 738, y2: 510}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Suaves.mp3' }
     ]
   },
   {
+    id: 'oido_grave',
     title: 'El oído',
     subtitle: '¿Qué sonidos podemos percibir también?',
     image: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/refs/heads/main/2Sentidos/Senti2/Grave_agudo.png',
-    width: 696,
-    height: 644,
-    boxes: [
-      {word:'Grave', x1:45, y1:200, x2:295, y2:570, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Graves.mp3'},
-      {word:'Agudo', x1:439, y1:316, x2:582, y2:491, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Agudos.mp3'}
+    originalWidth: 696,
+    originalHeight: 644,
+    areas: [
+      { name: 'Grave', coords: {x1: 45, y1: 200, x2: 295, y2: 570}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Graves.mp3' },
+      { name: 'Agudo', coords: {x1: 439, y1: 316, x2: 582, y2: 491}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Agudos.mp3' }
     ]
   },
   {
+    id: 'gusto',
     title: 'El gusto',
     subtitle: '¿Qué sabores podemos distinguir?',
     image: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/refs/heads/main/2Sentidos/Senti2/Sabores.png',
-    width: 438,
-    height: 481,
-    boxes: [
-      {word:'Ácido', x1:41, y1:108, x2:189, y2:226, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Acido.mp3'},
-      {word:'Amargo', x1:245, y1:101, x2:397, y2:239, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Amargo.mp3'},
-      {word:'Salado', x1:28, y1:310, x2:181, y2:424, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Saslado.mp3'},
-      {word:'Dulce', x1:263, y1:327, x2:384, y2:421, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Dulce.mp3'}
+    originalWidth: 438,
+    originalHeight: 481,
+    areas: [
+      { name: 'Ácido', coords: {x1: 41, y1: 108, x2: 189, y2: 226}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Acido.mp3' },
+      { name: 'Amargo', coords: {x1: 245, y1: 101, x2: 397, y2: 239}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Amargo.mp3' },
+      { name: 'Salado', coords: {x1: 28, y1: 310, x2: 181, y2: 424}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Saslado.mp3' },
+      { name: 'Dulce', coords: {x1: 263, y1: 327, x2: 384, y2: 421}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Dulce.mp3' }
     ]
   },
   {
+    id: 'tacto',
     title: 'El tacto',
     subtitle: '¿Qué características podemos sentir con el tacto?',
     image: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/refs/heads/main/2Sentidos/Senti2/Tacto2.png',
-    width: 900,
-    height: 614,
-    boxes: [
-      {word:'Blando', x1:42, y1:123, x2:241, y2:296, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Blando.mp3'},
-      {word:'Duro', x1:367, y1:131, x2:546, y2:279, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/duro.mp3'},
-      {word:'Liso', x1:647, y1:106, x2:840, y2:291, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/liso.mp3'},
-      {word:'Rugoso', x1:40, y1:356, x2:258, y2:535, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Rugoso.mp3'},
-      {word:'Frío', x1:368, y1:384, x2:550, y2:519, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Fr%C3%ADo.mp3'},
-      {word:'Calor', x1:674, y1:383, x2:834, y2:510, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Caliente.mp3'}
+    originalWidth: 900,
+    originalHeight: 614,
+    areas: [
+      { name: 'Blando', coords: {x1: 42, y1: 123, x2: 241, y2: 296}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Blando.mp3' },
+      { name: 'Duro', coords: {x1: 367, y1: 131, x2: 546, y2: 279}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/duro.mp3' },
+      { name: 'Liso', coords: {x1: 647, y1: 106, x2: 840, y2: 291}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/liso.mp3' },
+      { name: 'Rugoso', coords: {x1: 40, y1: 356, x2: 258, y2: 535}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Rugoso.mp3' },
+      { name: 'Frío', coords: {x1: 368, y1: 384, x2: 550, y2: 519}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Fr%C3%ADo.mp3' },
+      { name: 'Calor', coords: {x1: 674, y1: 383, x2: 834, y2: 510}, audio: 'https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/main/2Sentidos/Est%C3%ADmulos/Caliente.mp3' }
     ]
   }
 ];
@@ -392,42 +432,26 @@ const wordAudios = {};
 
 function preloadWordAudios() {
   return new Promise((resolve) => {
-    const allBoxes = SCREENS_DATA.flatMap(s => s.boxes);
-    if (!allBoxes || allBoxes.length === 0) {
-      audiosPrecargados = true;
-      resolve();
-      return;
-    }
-
+    let totalToLoad = 0;
+    GAME_SCREENS.forEach(screen => totalToLoad += screen.areas.length);
+    if (totalToLoad === 0) { audiosPrecargados = true; resolve(); return; }
     let loadedCount = 0;
-    const totalToLoad = allBoxes.length;
-
-    allBoxes.forEach((box) => {
-      try {
-        const audio = new Audio();
-        audio.src = box.audio;
-        audio.preload = 'auto';
-        audio.crossOrigin = 'anonymous';
-
-        const checkCompletion = () => {
-          loadedCount++;
-          if (loadedCount === totalToLoad) {
-            audiosPrecargados = true;
-            resolve();
-          }
-        };
-
-        audio.addEventListener('canplaythrough', checkCompletion, { once: true });
-        audio.addEventListener('error', checkCompletion, { once: true });
-
-        wordAudios[box.word] = audio;
-      } catch(e) {
-        loadedCount++;
-        if (loadedCount === totalToLoad) {
-          audiosPrecargados = true;
-          resolve();
-        }
-      }
+    GAME_SCREENS.forEach(screen => {
+      screen.areas.forEach(area => {
+        try {
+          const audio = new Audio();
+          audio.src = area.audio;
+          audio.preload = 'auto';
+          audio.crossOrigin = 'anonymous';
+          const checkCompletion = () => {
+            loadedCount++;
+            if (loadedCount === totalToLoad) { audiosPrecargados = true; resolve(); }
+          };
+          audio.addEventListener('canplaythrough', checkCompletion, { once: true });
+          audio.addEventListener('error', checkCompletion, { once: true });
+          wordAudios[area.name] = audio;
+        } catch(e) { loadedCount++; if (loadedCount === totalToLoad) { audiosPrecargados = true; resolve(); } }
+      });
     });
   });
 }
@@ -436,33 +460,19 @@ function unlockAudio(){
   if (audioUnlocked) return;
   try{
     const ctx = new (window.AudioContext||window.webkitAudioContext)();
-    const o = ctx.createOscillator();
-    const g = ctx.createGain();
-    o.connect(g);
-    g.connect(ctx.destination);
-    g.gain.value = 0.0001;
-    o.start();
-    o.stop(ctx.currentTime + 0.02);
-    audioUnlocked = true;
-  } catch(e){
-    console.warn("Web Audio API no disponible:", e);
-    audioUnlocked = true;
-  }
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination); g.gain.value = 0.0001;
+    o.start(); o.stop(ctx.currentTime + 0.02); audioUnlocked = true;
+  } catch(e){ console.warn("Web Audio API no disponible:", e); audioUnlocked = true; }
 }
 
 function play(name){
   if(isMuted) return;
   const a = sounds[name];
   if(!a) return;
-  try{
-    a.currentTime = 0;
-    const p = a.play();
-    if (p && p.catch) p.catch(err => console.warn('Reproducción fallida:', err));
-  } catch(e){
-    console.warn('Audio play error:', e);
-  }
+  try{ a.currentTime = 0; const p = a.play(); if (p && p.catch) p.catch(err => console.warn('Reproducción de efecto fallida:', err)); }
+  catch(e){ console.warn('Audio play error:', e); }
 }
-
 function reproducirSonidoCorrecto(){ play('correct'); }
 function reproducirSonidoError(){ play('error'); }
 function reproducirSonidoCompletado(){ play('completed'); }
@@ -470,422 +480,187 @@ function reproducirSonidoVictoria(){ play('victory'); }
 function reproducirSonidoTap(){ play('tap'); }
 
 function playWordAudio(word, delay = 0) {
-  if (!userInteracted) {
-    console.log("Esperando interacción para reproducir.");
-    return;
-  }
-  if (pendingAudioTimeout) {
-    clearTimeout(pendingAudioTimeout);
-    pendingAudioTimeout = null;
-  }
+  if (!userInteracted) { console.log("Esperando interacción para reproducir."); return; }
+  if (pendingAudioTimeout) { clearTimeout(pendingAudioTimeout); pendingAudioTimeout = null; }
   if (isMuted) return;
-
   const audio = wordAudios[word];
-  if (!audio) {
-    console.error(`No se encontró audio precargado para: "${word}"`);
-    return;
-  }
+  if (!audio) { console.error(`No se encontró audio precargado para: "${word}"`); return; }
   try {
-    if (currentWordAudio && !currentWordAudio.paused && currentWordAudio !== audio) {
-      currentWordAudio.pause();
-      currentWordAudio.currentTime = 0;
-    }
+    if (currentWordAudio && !currentWordAudio.paused && currentWordAudio !== audio) { currentWordAudio.pause(); currentWordAudio.currentTime = 0; }
     currentWordAudio = audio;
-
     const playAudioNow = () => {
-      try {
-        audio.currentTime = 0;
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.warn(`Error al reproducir audio para "${word}":`, error);
-          });
-        }
-      } catch(e) {
-        console.error('Error al iniciar reproducción:', e);
-      }
+      try { audio.currentTime = 0; const playPromise = audio.play(); if (playPromise !== undefined) { playPromise.catch(error => console.warn(`Error al reproducir audio para "${word}":`, error)); } }
+      catch(e) { console.error('Error al intentar iniciar la reproducción:', e); }
     };
-
-    if (delay > 0) {
-      pendingAudioTimeout = setTimeout(playAudioNow, delay);
-    } else {
-      playAudioNow();
-    }
-  } catch(e) {
-    console.error('Error al configurar reproducción:', e);
-  }
+    if (delay > 0) { pendingAudioTimeout = setTimeout(playAudioNow, delay); } else { playAudioNow(); }
+  } catch(e) { console.error('Error al configurar la reproducción de audio:', e); }
 }
 
 /************** State & helpers **************/
 const el = (id)=>document.getElementById(id);
-const bodyImg = el('bodyImg');
-const imgWrap = el('imgWrap');
-const gameTitle = el('gameTitle');
-const gameSubtitle = el('gameSubtitle');
-const playWordBtn = el('playWordBtn');
-const progressFill = el('progressFill');
-const timerEl = el('timer');
-const scoreEl = el('score');
-const loadingIndicator = el('loadingIndicator');
+const bodyImg = el('bodyImg'); const imgWrap = el('imgWrap'); const overlayClick = el('overlayClick');
+const wordDisplay = el('wordDisplay'); const playWordBtn = el('playWordBtn');
+const progressFill = el('progressFill'); const timerEl = el('timer'); const scoreEl = el('score');
+const loadingIndicator = el('loadingIndicator'); const gameTitle = el('gameTitle');
 
-let screenOrder = [];
-let currentScreenIndex = 0;
-let currentBoxOrder = [];
-let currentBoxIndex = 0;
-let totalQuestions = 0;
-let correctCount = 0;
-let answered = 0;
-let timerInt = null; 
-let elapsed = 0;
-let selectionBoxes = [];
+let currentScreenIndex = 0; let currentScreenOrder = [];
+let currentAreaIndex = 0; let currentAreaOrder = [];
+let answered = new Set(); let correctCount = 0; let timerInt = null; let elapsed = 0;
+let markers = []; let mode = 'play'; let totalQuestions = 0;
 
-function fmtTime(s){ 
-  const m=Math.floor(s/60).toString().padStart(2,'0'); 
-  const ss=(s%60).toString().padStart(2,'0'); 
-  return `${m}:${ss}`; 
-}
-
-function startTimer(){ 
-  clearInterval(timerInt); 
-  timerInt = setInterval(()=>{ 
-    elapsed++; 
-    timerEl.textContent = fmtTime(elapsed); 
-  },1000); 
-}
-
+function fmtTime(s){ const m=Math.floor(s/60).toString().padStart(2,'0'); const ss=(s%60).toString().padStart(2,'0'); return `${m}:${ss}`; }
+function startTimer(){ clearInterval(timerInt); timerInt = setInterval(()=>{ elapsed++; timerEl.textContent = fmtTime(elapsed); },1000); }
 function stopTimer(){ clearInterval(timerInt); }
+function updateProgress(){ const pct = (answered.size / totalQuestions)*100; progressFill.style.width = pct + '%'; scoreEl.textContent = Math.round((correctCount/totalQuestions)*100); }
 
-function updateProgress(){ 
-  const pct = (answered / totalQuestions)*100; 
-  progressFill.style.width = pct + '%'; 
-  const currentScore = Math.round((correctCount/totalQuestions)*100);
-  scoreEl.textContent = currentScore; 
-}
-
-function shuffle(a){ 
-  const arr=[...a]; 
-  for(let i=arr.length-1;i>0;i--){ 
-    const j=Math.floor(Math.random()*(i+1)); 
-    [arr[i],arr[j]]=[arr[j],arr[i]]; 
-  } 
-  return arr; 
-}
-
-function placeSelectionBoxes(){
-  selectionBoxes.forEach(b=>b.remove()); 
-  selectionBoxes = [];
-  
-  const screen = SCREENS_DATA[screenOrder[currentScreenIndex]];
+function placeMarkers(){
+  markers.forEach(m=>m.remove()); markers = [];
+  const currentScreen = GAME_SCREENS[currentScreenOrder[currentScreenIndex]];
   const rect = bodyImg.getBoundingClientRect();
-  const scaleX = rect.width / screen.width;
-  const scaleY = rect.height / screen.height;
+  const scaleX = rect.width / currentScreen.originalWidth;
+  const scaleY = rect.height / currentScreen.originalHeight;
 
-  screen.boxes.forEach((box, idx)=>{
-    const x1 = box.x1 * scaleX;
-    const y1 = box.y1 * scaleY;
-    const x2 = box.x2 * scaleX;
-    const y2 = box.y2 * scaleY;
-    
-    const div = document.createElement('div');
-    div.className = 'selection-box';
-    div.style.left = x1 + 'px';
-    div.style.top = y1 + 'px';
-    div.style.width = (x2 - x1) + 'px';
-    div.style.height = (y2 - y1) + 'px';
-    div.dataset.idx = idx;
-    div.dataset.word = box.word;
-    div.tabIndex = 0;
-    div.setAttribute('role','button');
-    div.setAttribute('aria-label', `Casilla para ${box.word}`);
-    div.addEventListener('click', onBoxClick);
-    div.addEventListener('keydown', (e)=>{ 
-      if(e.key==='Enter' || e.key===' '){ 
-        e.preventDefault(); 
-        onBoxClick.call(div, e); 
-      }
-    });
-    imgWrap.appendChild(div); 
-    selectionBoxes.push(div);
+  currentScreen.areas.forEach((area, idx)=>{
+    const x1 = area.coords.x1 * scaleX; const y1 = area.coords.y1 * scaleY;
+    const x2 = area.coords.x2 * scaleX; const y2 = area.coords.y2 * scaleY;
+    const width = x2 - x1; const height = y2 - y1;
+    const centerX = x1 + width/2; const centerY = y1 + height/2;
+    const div = document.createElement('div'); div.className = 'marker';
+    div.style.left = centerX + 'px'; div.style.top = centerY + 'px';
+    div.style.width = width + 'px'; div.style.height = height + 'px';
+    div.dataset.idx = idx; div.tabIndex = 0; div.setAttribute('role','button');
+    div.setAttribute('aria-label', `Marcador para ${area.name}`);
+    div.addEventListener('click', onMarkerClick);
+    div.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); onMarkerClick.call(div, e); }});
+    imgWrap.appendChild(div); markers.push(div);
   });
 }
 
-function refreshSelectionBoxes(){
-  const screen = SCREENS_DATA[screenOrder[currentScreenIndex]];
+function refreshMarkersStyles(){
+  const currentScreen = GAME_SCREENS[currentScreenOrder[currentScreenIndex]];
   const rect = bodyImg.getBoundingClientRect();
-  const scaleX = rect.width / screen.width;
-  const scaleY = rect.height / screen.height;
-
-  selectionBoxes.forEach((div)=>{
-    const idx = +div.dataset.idx; 
-    const box = screen.boxes[idx];
-    const x1 = box.x1 * scaleX;
-    const y1 = box.y1 * scaleY;
-    const x2 = box.x2 * scaleX;
-    const y2 = box.y2 * scaleY;
-    
-    div.style.left = x1 + 'px';
-    div.style.top = y1 + 'px';
-    div.style.width = (x2 - x1) + 'px';
-    div.style.height = (y2 - y1) + 'px';
+  const scaleX = rect.width / currentScreen.originalWidth;
+  const scaleY = rect.height / currentScreen.originalHeight;
+  markers.forEach((div)=>{
+    const idx = +div.dataset.idx; const area = currentScreen.areas[idx];
+    const x1 = area.coords.x1 * scaleX; const y1 = area.coords.y1 * scaleY;
+    const x2 = area.coords.x2 * scaleX; const y2 = area.coords.y2 * scaleY;
+    const width = x2 - x1; const height = y2 - y1;
+    const centerX = x1 + width/2; const centerY = y1 + height/2;
+    div.style.left = centerX + 'px'; div.style.top = centerY + 'px';
+    div.style.width = width + 'px'; div.style.height = height + 'px';
   });
 }
 
-function loadScreen(){
-  const screen = SCREENS_DATA[screenOrder[currentScreenIndex]];
-  gameTitle.textContent = screen.title;
-  gameSubtitle.textContent = screen.subtitle;
-  bodyImg.src = screen.image;
-  
-  currentBoxOrder = shuffle([...Array(screen.boxes.length).keys()]);
-  currentBoxIndex = 0;
-  
-  bodyImg.onload = () => {
-    placeSelectionBoxes();
-    playCurrentAudio();
-  };
-}
-
-function playCurrentAudio(){
-  const screen = SCREENS_DATA[screenOrder[currentScreenIndex]];
-  const boxIdx = currentBoxOrder[currentBoxIndex];
-  const box = screen.boxes[boxIdx];
-  playWordAudio(box.word, 500);
-}
-
-function onBoxClick(e){
-  const clickedWord = this.dataset.word;
-  const screen = SCREENS_DATA[screenOrder[currentScreenIndex]];
-  const currentBoxIdx = currentBoxOrder[currentBoxIndex];
-  const expectedWord = screen.boxes[currentBoxIdx].word;
-  
-  if (currentWordAudio) { 
-    currentWordAudio.pause(); 
-    currentWordAudio.currentTime = 0; 
-    currentWordAudio = null; 
-  }
-  if (pendingAudioTimeout) { 
-    clearTimeout(pendingAudioTimeout); 
-    pendingAudioTimeout = null; 
-  }
-
-  if(clickedWord === expectedWord){
-    this.classList.add('correct');
-    reproducirSonidoCorrecto();
-    correctCount++;
-  } else {
-    this.classList.add('incorrect');
-    reproducirSonidoError();
-  }
-  
-  answered++;
-  updateProgress();
-  
-  setTimeout(() => {
-    this.classList.remove('correct', 'incorrect');
-    
-    currentBoxIndex++;
-    
-    if(currentBoxIndex >= screen.boxes.length){
-      currentScreenIndex++;
-      
-      if(currentScreenIndex >= screenOrder.length){
-        finishGame();
-      } else {
-        loadScreen();
-      }
-    } else {
-      playCurrentAudio();
-    }
-  }, 500);
-}
+function setWordDisplayByName(name){ if (!name) return; wordDisplay.textContent = name; playWordAudio(name, 500); }
 
 function beginPlay(){
-  totalQuestions = SCREENS_DATA.reduce((sum, s) => sum + s.boxes.length, 0);
-  screenOrder = shuffle([...Array(SCREENS_DATA.length).keys()]);
-  currentScreenIndex = 0;
-  correctCount = 0;
-  answered = 0;
-  updateProgress();
-  
-  elapsed = 0;
-  timerEl.textContent = '00:00';
-  startTimer();
-  
-  loadScreen();
+  mode='play'; currentScreenOrder = shuffle([...Array(GAME_SCREENS.length).keys()]);
+  currentScreenIndex = 0; answered.clear(); correctCount = 0; elapsed = 0; updateProgress();
+  loadScreen(currentScreenOrder[currentScreenIndex]); startTimer();
 }
 
-function finishGame(){ 
-  stopTimer(); 
-  const score = Math.round((correctCount/totalQuestions)*100);
-  el('gameScreen').classList.remove('active'); 
-  el('resultsScreen').classList.add('active');
-  el('finalScore').textContent = score; 
-  el('finalTime').textContent = fmtTime(elapsed);
+function loadScreen(screenIndex) {
+  const currentScreen = GAME_SCREENS[screenIndex];
+  gameTitle.textContent = currentScreen.title; bodyImg.src = currentScreen.image;
+  currentAreaOrder = shuffle([...Array(currentScreen.areas.length).keys()]);
+  currentAreaIndex = 0; markers.forEach(m=>m.remove()); markers = [];
+  bodyImg.onload = () => { placeMarkers(); setWordDisplayByName(currentScreen.areas[currentAreaOrder[currentAreaIndex]].name); };
+}
+
+function onMarkerClick(e){
+  if(mode!=='play') return;
+  const currentScreen = GAME_SCREENS[currentScreenOrder[currentScreenIndex]];
+  const idxClicked = +this.dataset.idx; const currentAreaIdx = currentAreaOrder[currentAreaIndex];
+  if(typeof currentAreaIdx === 'undefined' || answered.has(`${currentScreenIndex}-${currentAreaIdx}`)) return;
+  if (currentWordAudio) { currentWordAudio.pause(); currentWordAudio.currentTime = 0; currentWordAudio = null; }
+  if (pendingAudioTimeout) { clearTimeout(pendingAudioTimeout); pendingAudioTimeout = null; }
+  if(idxClicked === currentAreaIdx){
+    this.classList.add('correct'); reproducirSonidoCorrecto(); answered.add(`${currentScreenIndex}-${currentAreaIdx}`); correctCount++; updateProgress();
+    setTimeout(() => this.classList.remove('correct'), 500);
+  } else {
+    const rightMarker = markers[currentAreaIdx];
+    if (rightMarker) { rightMarker.classList.add('reveal-red'); setTimeout(() => rightMarker.classList.remove('reveal-red'), 500); }
+    this.classList.add('clicked-temp'); setTimeout(()=> this.classList.remove('clicked-temp'), 250);
+    reproducirSonidoError(); answered.add(`${currentScreenIndex}-${currentAreaIdx}`); updateProgress();
+  }
+  if(currentAreaIndex + 1 >= currentScreen.areas.length){
+    if(currentScreenIndex + 1 >= GAME_SCREENS.length){ finishGame(); }
+    else { setTimeout(() => { currentScreenIndex++; loadScreen(currentScreenOrder[currentScreenIndex]); }, 500); }
+  } else { setTimeout(() => { currentAreaIndex++; setWordDisplayByName(currentScreen.areas[currentAreaOrder[currentAreaIndex]].name); }, 500); }
+}
+
+function finishGame(){ stopTimer(); const score = Math.round((correctCount/totalQuestions)*100);
+  el('gameScreen').classList.remove('active'); el('resultsScreen').classList.add('active');
+  el('finalScore').textContent = score; el('finalTime').textContent = fmtTime(elapsed);
   el('trophyBox').style.display = (score===100) ? 'block' : 'none';
   const msg = (score===100) ? '¡Enhorabuena, puntuación máxima!' : '¡Buen trabajo! Sigue practicando';
   el('finalMsg').textContent = msg;
-  if(score===100){ 
-    reproducirSonidoVictoria(); 
-    spawnConfetti(); 
-  } else { 
-    reproducirSonidoCompletado(); 
-  }
+  if(score===100){ reproducirSonidoVictoria(); spawnConfetti(); } else { reproducirSonidoCompletado(); }
 }
+function shuffle(a){ const arr=[...a]; for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
 
 function spawnConfetti(){
   for(let i=0;i<120;i++){
     setTimeout(()=>{
-      const c=document.createElement('div');
-      c.className='confetti';
-      const x=Math.random()*window.innerWidth;
-      const ty=window.innerHeight+20;
-      const tx=(Math.random()-.5)*160;
+      const c=document.createElement('div'); c.className='confetti'; const x=Math.random()*window.innerWidth;
+      const ty=window.innerHeight+20; const tx=(Math.random()-.5)*160;
       const colors=['#ff595e','#1982c4','#6a4c93','#ffca3a','#8ac926','#ff924c','#00c2ff'];
-      c.style.left=x+'px';
-      c.style.top='-10px';
-      c.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
-      const size=6+Math.random()*8;
-      c.style.width=size+'px';
-      c.style.height=size+'px';
-      c.style.setProperty('--tx', tx+'px');
-      c.style.setProperty('--ty', ty+'px');
-      document.body.appendChild(c);
-      setTimeout(()=>c.remove(), 3200);
+      c.style.left=x+'px'; c.style.top='-10px'; c.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+      const size=6+Math.random()*8; c.style.width=size+'px'; c.style.height=size+'px';
+      c.style.setProperty('--tx', tx+'px'); c.style.setProperty('--ty', ty+'px');
+      document.body.appendChild(c); setTimeout(()=>c.remove(), 3200);
     }, i*18);
   }
 }
 
 function gotoStart(){
-  el('resultsScreen').classList.remove('active'); 
-  el('gameScreen').classList.remove('active'); 
-  el('startScreen').classList.add('active');
-  
-  screenOrder = [];
-  currentScreenIndex = 0;
-  currentBoxOrder = [];
-  currentBoxIndex = 0;
-  totalQuestions = 0;
-  correctCount = 0;
-  answered = 0;
-  elapsed = 0;
-  timerEl.textContent = '00:00';
-  progressFill.style.width = '0%';
-  scoreEl.textContent = '0';
-  
-  selectionBoxes.forEach(b => b.remove());
-  selectionBoxes = [];
-  
-  userInteracted = false;
-  if (currentWordAudio) { 
-    currentWordAudio.pause(); 
-    currentWordAudio.currentTime = 0; 
-    currentWordAudio = null; 
-  }
-  if (pendingAudioTimeout) { 
-    clearTimeout(pendingAudioTimeout); 
-    pendingAudioTimeout = null; 
-  }
+  el('resultsScreen').classList.remove('active'); el('gameScreen').classList.remove('active'); el('startScreen').classList.add('active');
+  currentScreenIndex = 0; currentScreenOrder = []; currentAreaIndex = 0; currentAreaOrder = [];
+  answered.clear(); correctCount = 0; elapsed = 0; timerEl.textContent='00:00'; progressFill.style.width='0%'; scoreEl.textContent='0'; mode='play';
+  markers.forEach(m=> m.classList.remove('target-green','reveal-red','correct')); userInteracted = false;
+  if (currentWordAudio) { currentWordAudio.pause(); currentWordAudio.currentTime = 0; currentWordAudio = null; }
+  if (pendingAudioTimeout) { clearTimeout(pendingAudioTimeout); pendingAudioTimeout = null; }
 }
 
 function trackUserInteraction() {
-  if (!userInteracted) {
-    userInteracted = true;
-    unlockAudio();
-    if (audiosPrecargados) {
-        loadingIndicator.style.display = 'none';
-    }
-  }
+  if (!userInteracted) { userInteracted = true; unlockAudio(); if (audiosPrecargados) { loadingIndicator.style.display = 'none'; } }
 }
 
+/* --- Inicialización --- */
 document.addEventListener('DOMContentLoaded', async () => {
+    GAME_SCREENS.forEach(screen => totalQuestions += screen.areas.length);
     await preloadWordAudios();
-    if (!userInteracted) {
-        loadingIndicator.querySelector('.loading-text').textContent = "Carga completa. Pulsa Comenzar para empezar.";
-        loadingIndicator.style.display = 'none';
-    }
+    if (!userInteracted) { loadingIndicator.querySelector('.loading-text').textContent = "Carga completa. Pulsa Comenzar para empezar."; loadingIndicator.style.display = 'none'; }
 });
 
 el('playBtn').addEventListener('click', async ()=>{
-  trackUserInteraction();
-  reproducirSonidoTap();
-  unlockAudio();
-
-  if (!audiosPrecargados) {
-      loadingIndicator.style.display = 'flex';
-      loadingIndicator.querySelector('.loading-text').textContent = "Cargando audios...";
-      el('playBtn').disabled = true;
-      await preloadWordAudios();
-  }
-
-  el('startScreen').classList.remove('active');
-  el('gameScreen').classList.add('active');
-  beginPlay();
-
-  loadingIndicator.style.display = 'none';
-  el('playBtn').disabled = false;
+  trackUserInteraction(); reproducirSonidoTap(); unlockAudio();
+  if (!audiosPrecargados) { loadingIndicator.style.display = 'flex'; loadingIndicator.querySelector('.loading-text').textContent = "Cargando audios..."; el('playBtn').disabled = true; await preloadWordAudios(); }
+  el('startScreen').classList.remove('active'); el('gameScreen').classList.add('active');
+  beginPlay(); loadingIndicator.style.display = 'none'; el('playBtn').disabled = false;
 });
 
 playWordBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  trackUserInteraction();
-  const screen = SCREENS_DATA[screenOrder[currentScreenIndex]];
-  const boxIdx = currentBoxOrder[currentBoxIndex];
-  const box = screen.boxes[boxIdx];
-  playWordAudio(box.word, 0);
+  e.stopPropagation(); trackUserInteraction();
+  const currentScreen = GAME_SCREENS[currentScreenOrder[currentScreenIndex]];
+  const currentArea = currentScreen.areas[currentAreaOrder[currentAreaIndex]];
+  playWordAudio(currentArea.name, 0);
 });
 
-el('backToMenuBtn').addEventListener('click', ()=>{
-  trackUserInteraction();
-  reproducirSonidoTap();
-  gotoStart();
-});
-
-el('helpBtn').addEventListener('click', ()=>{
-  trackUserInteraction();
-  reproducirSonidoTap();
-  el('helpModal').style.display='flex';
-});
-
-el('closeHelp').addEventListener('click', ()=>{
-  trackUserInteraction();
-  reproducirSonidoTap();
-  el('helpModal').style.display='none';
-});
-
-el('helpModal').addEventListener('click', (e)=>{
-  if(e.target===el('helpModal')) el('helpModal').style.display='none';
-});
-
+el('backToMenuBtn').addEventListener('click', ()=>{ trackUserInteraction(); reproducirSonidoTap(); gotoStart(); });
+el('helpBtn').addEventListener('click', ()=>{ trackUserInteraction(); reproducirSonidoTap(); el('helpModal').style.display='flex'; });
+el('closeHelp').addEventListener('click', ()=>{ trackUserInteraction(); reproducirSonidoTap(); el('helpModal').style.display='none'; });
+el('helpModal').addEventListener('click', (e)=>{ if(e.target===el('helpModal')) el('helpModal').style.display='none'; });
 el('muteBtn').addEventListener('click', ()=>{
-  trackUserInteraction();
-  isMuted = !isMuted;
-  el('muteBtn').textContent = isMuted ? '🔇' : '🔊';
-  if (isMuted && currentWordAudio) { 
-    currentWordAudio.pause(); 
-    currentWordAudio.currentTime = 0; 
-  }
-  if (pendingAudioTimeout) { 
-    clearTimeout(pendingAudioTimeout); 
-    pendingAudioTimeout = null; 
-  }
+  trackUserInteraction(); isMuted = !isMuted; el('muteBtn').textContent = isMuted ? '🔇' : '🔊';
+  if (isMuted && currentWordAudio) { currentWordAudio.pause(); currentWordAudio.currentTime = 0; }
+  if (pendingAudioTimeout) { clearTimeout(pendingAudioTimeout); pendingAudioTimeout = null; }
 });
-
 document.addEventListener('click', trackUserInteraction, { once: false });
 document.addEventListener('touchstart', trackUserInteraction, { once: false });
 document.addEventListener('keydown', trackUserInteraction, { once: false });
-
-window.addEventListener('resize', () => {
-  if(el('gameScreen').classList.contains('active') && selectionBoxes.length > 0){
-    refreshSelectionBoxes();
-  }
-});
-
-window.addEventListener('load', () => {
-    if (audiosPrecargados && !userInteracted) {
-        loadingIndicator.style.display = 'none';
-    }
-});
+window.addEventListener('resize', refreshMarkersStyles);
 </script>
 </body>
 </html>
-  
